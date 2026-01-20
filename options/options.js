@@ -136,6 +136,9 @@ function bindEvents() {
             toggleGroupShow(groupId, e.target.checked);
         }
     });
+
+    // 重置为默认
+    document.getElementById('reset-default-btn').addEventListener('click', resetToDefault);
 }
 
 /**
@@ -183,7 +186,7 @@ function renderSites() {
       </td>
       <td class="actions-col">
         <button class="btn-icon" data-action="edit" data-site-id="${site.id}" title="Edit">✏️</button>
-        <button class="btn-icon" data-action="delete" data-site-id="${site.id}" title="Delete">🗑️</button>
+        <button class="btn-icon btn-delete" data-action="delete" data-site-id="${site.id}" title="Delete">🗑</button>
       </td>
     </tr>
   `).join('');
@@ -397,7 +400,7 @@ function renderGroups() {
         </td>
         <td class="actions-col">
           <button class="btn-icon" data-action="edit" data-group-id="${group.id}" title="Edit">✏️</button>
-          <button class="btn-icon" data-action="delete" data-group-id="${group.id}" title="Delete">🗑️</button>
+          <button class="btn-icon btn-delete" data-action="delete" data-group-id="${group.id}" title="Delete">🗑</button>
         </td>
       </tr>
     `;
@@ -477,38 +480,121 @@ async function toggleGroupShow(groupId, show) {
 /**
  * 打开分组模态框
  */
+let selectedSiteIds = []; // 已选站点ID列表（保持顺序）
+
 function openGroupModal(groupId = null) {
     editingGroupId = groupId;
     const modal = document.getElementById('group-modal');
     const title = document.getElementById('group-modal-title');
     const nameInput = document.getElementById('group-name-input');
-    const selector = document.getElementById('sites-selector');
-
-    // 渲染站点选择器
-    selector.innerHTML = sites.map(site => `
-    <label class="site-checkbox">
-      <input type="checkbox" value="${site.id}">
-      <span>${escapeHtml(site.name)}</span>
-    </label>
-  `).join('');
 
     if (groupId) {
         const group = groups.find(g => g.id === groupId);
         title.textContent = i18n.get('editGroup');
         nameInput.value = group.name;
-
-        // 选中已有的站点
-        group.siteIds.forEach(id => {
-            const checkbox = selector.querySelector(`input[value="${id}"]`);
-            if (checkbox) checkbox.checked = true;
-        });
+        selectedSiteIds = [...group.siteIds]; // 复制已选站点
     } else {
         title.textContent = i18n.get('addGroup');
         nameInput.value = '';
+        selectedSiteIds = [];
     }
 
+    renderGroupSiteSelectors();
     modal.classList.add('show');
     nameInput.focus();
+}
+
+/**
+ * 渲染分组站点选择器
+ */
+function renderGroupSiteSelectors() {
+    const selectedList = document.getElementById('selected-sites-list');
+    const availableList = document.getElementById('sites-selector');
+
+    // 渲染已选站点（可拖动）
+    selectedList.innerHTML = selectedSiteIds.map(id => {
+        const site = sites.find(s => s.id === id);
+        if (!site) return '';
+        return `
+            <div class="selected-site-item" draggable="true" data-site-id="${site.id}">
+                <span class="drag-handle">⋮⋮</span>
+                <span class="site-name">${escapeHtml(site.name)}</span>
+                <button class="remove-btn" data-remove-id="${site.id}">✕</button>
+            </div>
+        `;
+    }).join('') || '<p style="color: var(--text-muted); font-size: 12px; text-align: center; padding: 20px;">点击右侧添加站点</p>';
+
+    // 渲染可选站点
+    const availableSites = sites.filter(s => !selectedSiteIds.includes(s.id));
+    availableList.innerHTML = availableSites.map(site => `
+        <label class="site-checkbox" data-add-id="${site.id}">
+            <span>${escapeHtml(site.name)}</span>
+        </label>
+    `).join('') || '<p style="color: var(--text-muted); font-size: 12px; text-align: center; padding: 20px;">全部已选</p>';
+
+    // 绑定事件
+    bindGroupSelectorEvents();
+}
+
+/**
+ * 绑定分组选择器事件
+ */
+function bindGroupSelectorEvents() {
+    const selectedList = document.getElementById('selected-sites-list');
+    const availableList = document.getElementById('sites-selector');
+
+    // 添加站点
+    availableList.querySelectorAll('[data-add-id]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            const siteId = el.dataset.addId;
+            if (!selectedSiteIds.includes(siteId)) {
+                selectedSiteIds.push(siteId);
+                renderGroupSiteSelectors();
+            }
+        });
+    });
+
+    // 移除站点
+    selectedList.querySelectorAll('[data-remove-id]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const siteId = btn.dataset.removeId;
+            selectedSiteIds = selectedSiteIds.filter(id => id !== siteId);
+            renderGroupSiteSelectors();
+        });
+    });
+
+    // 拖动排序
+    let draggedItem = null;
+    selectedList.querySelectorAll('.selected-site-item').forEach(item => {
+        item.addEventListener('dragstart', (e) => {
+            draggedItem = item;
+            item.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+
+        item.addEventListener('dragend', () => {
+            item.classList.remove('dragging');
+            draggedItem = null;
+            // 更新顺序
+            const newOrder = Array.from(selectedList.querySelectorAll('.selected-site-item'))
+                .map(el => el.dataset.siteId);
+            selectedSiteIds = newOrder;
+        });
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (draggedItem && draggedItem !== item) {
+                const rect = item.getBoundingClientRect();
+                const midpoint = rect.top + rect.height / 2;
+                if (e.clientY < midpoint) {
+                    selectedList.insertBefore(draggedItem, item);
+                } else {
+                    selectedList.insertBefore(draggedItem, item.nextSibling);
+                }
+            }
+        });
+    });
 }
 
 /**
@@ -517,6 +603,7 @@ function openGroupModal(groupId = null) {
 function closeGroupModal() {
     document.getElementById('group-modal').classList.remove('show');
     editingGroupId = null;
+    selectedSiteIds = [];
 }
 
 /**
@@ -524,11 +611,7 @@ function closeGroupModal() {
  */
 async function saveGroup() {
     const nameInput = document.getElementById('group-name-input');
-    const selector = document.getElementById('sites-selector');
-
     const name = nameInput.value.trim();
-    const siteIds = Array.from(selector.querySelectorAll('input:checked'))
-        .map(input => input.value);
 
     if (!name) {
         showToast('Please enter group name', 'error');
@@ -536,20 +619,20 @@ async function saveGroup() {
         return;
     }
 
-    if (siteIds.length === 0) {
+    if (selectedSiteIds.length === 0) {
         showToast('Please select at least one site', 'error');
         return;
     }
 
     if (editingGroupId) {
-        await Storage.updateGroup(editingGroupId, { name, siteIds });
+        await Storage.updateGroup(editingGroupId, { name, siteIds: selectedSiteIds });
         const group = groups.find(g => g.id === editingGroupId);
         if (group) {
             group.name = name;
-            group.siteIds = siteIds;
+            group.siteIds = selectedSiteIds;
         }
     } else {
-        const newGroup = await Storage.addGroup({ name, siteIds, show: true });
+        const newGroup = await Storage.addGroup({ name, siteIds: selectedSiteIds, show: true });
         groups.push(newGroup);
     }
 
@@ -669,6 +752,32 @@ function showToast(message, type = '') {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 2000);
+}
+
+/**
+ * 重置为默认
+ */
+async function resetToDefault() {
+    // 显示确认框
+    if (!confirm(i18n.get('confirmReset'))) {
+        return;
+    }
+
+    // 执行重置
+    await Storage.resetToDefault();
+
+    // 重新加载数据
+    await loadData();
+
+    // 重新渲染
+    renderSites();
+    renderGroups();
+    renderSettings();
+
+    // 重新翻译页面(因为语言可能变了)
+    i18n.translatePage();
+
+    showToast(i18n.get('resetSuccess'), 'success');
 }
 
 /**

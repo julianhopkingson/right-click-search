@@ -72,7 +72,46 @@ chrome-extension://<extension-id>/options/options.html
 2. 选择扩展根目录
 3. 生成 `.crx` 文件和 `.pem` 私钥文件
 
-> ⚠️ 从Chrome 75开始，非Web Store的 .crx 文件无法直接安装，只能通过开发者模式加载
+> ⚠️ 从Chrome 35开始，非Web Store的 .crx 文件无法直接安装，只能通过开发者模式加载
+
+### 2.4 .crx 文件安装限制与解压
+
+#### 为什么 .crx 无法直接安装？
+
+从 Chrome 35 开始，Chrome **禁止直接安装非 Chrome Web Store 的 .crx 文件**。即使拖入安装成功，扩展也会被自动禁用并显示警告：
+
+> ⚠️ 该扩展程序未列在 Chrome 应用商店中，并可能是在您不知情的情况下添加的。
+
+#### 解决方案
+
+| 方案 | 适用场景 | 操作方式 |
+|------|----------|----------|
+| **开发者模式加载** | 个人使用（推荐） | `chrome://extensions/` → 开发者模式 → 加载已解压的扩展程序 |
+| **发布到 Web Store** | 公开分发 | 注册开发者账号（$5）→ 上传 .zip 包 |
+| **企业策略安装** | 公司内部 | 通过 Windows 组策略白名单允许 |
+
+#### 如何解压 .crx 文件？
+
+.crx 文件本质上是一个 ZIP 压缩包：
+
+**方法 1：改扩展名**
+```
+1. 将 right-click-search.crx 重命名为 right-click-search.zip
+2. 用 7-Zip / WinRAR 等工具解压
+```
+
+**方法 2：7-Zip 直接打开**
+```
+右键点击 .crx 文件 → 7-Zip → 解压到...
+```
+
+**方法 3：PowerShell 命令**
+```powershell
+Expand-Archive -Path "right-click-search.crx" -DestinationPath "extracted"
+# 如果失败，先将 .crx 重命名为 .zip
+```
+
+> 解压后的文件夹可直接用于开发者模式加载，效果与源代码文件夹完全一致。
 
 ---
 

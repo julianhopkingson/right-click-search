@@ -7,10 +7,12 @@
 ## Features
 
 - 🚀 **Quick Search** - Select text, right-click, search instantly
-- 📁 **Groups** - Batch search multiple sites at once
-- 🌐 **Bilingual** - Chinese/English UI switch
+- 📁 **Groups** - Batch search multiple sites at once (with **drag-and-drop reordering**)
+- 🌐 **Bilingual** - Chinese/English UI switch (default to English)
+- 🔃 **Reset to Default** - Easily restore all settings and sites
 - 📦 **Import/Export** - Backup and restore your settings
-- 🎨 **Modern UI** - Clean, responsive settings page
+- 🎨 **Modern UI** - Clean, responsive settings page with better accessibility
+- 🔒 **Security** - Fully CSP compliant (Manifest V3)
 
 ## Installation
 
@@ -62,15 +64,65 @@ Access settings via:
 
 ## Development
 
+### Project Structure
+
 ```
 right-click-search/
-├── manifest.json        # Extension config (Manifest V3)
-├── background.js        # Service worker
-├── _locales/            # i18n language files
-├── lib/                 # Core modules
-├── options/             # Settings page
-├── popup/               # Popup window
-└── icons/               # Extension icons
+├── manifest.json          # Extension config (Manifest V3)
+├── background.js          # Service Worker (event handling)
+├── popup/
+│   ├── popup.html         # Popup entry
+│   ├── popup.js           # Popup logic
+│   └── popup.css          # Popup styles
+├── options/
+│   ├── options.html       # Settings page
+│   ├── options.js         # Settings logic
+│   └── options.css        # Settings styles
+├── lib/
+│   ├── storage.js         # Chrome Storage wrapper
+│   └── i18n.js            # Internationalization module
+├── data/
+│   └── defaults.json      # Default sites, groups and settings
+├── _locales/
+│   ├── en/
+│   │   └── messages.json  # English language pack
+│   └── zh_CN/
+│       └── messages.json  # Chinese language pack
+├── icons/
+│   ├── icon16.png         # 16x16 icon
+│   ├── icon48.png         # 48x48 icon
+│   └── icon128.png        # 128x128 icon
+└── doc/
+    └── architecture-design.md
+```
+
+### Manifest V3 Configuration
+
+```json
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "version": "1.1.0",
+  "default_locale": "en",
+  "permissions": ["contextMenus", "storage", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
 ```
 
 ---

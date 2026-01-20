@@ -142,5 +142,20 @@
     },
     "openSettings": {
         "message": "Open Settings"
+    },
+    "resetToDefault": {
+        "message": "Reset to Default"
+    },
+    "resetToDefaultDesc": {
+        "message": "Reset all settings, sites, and groups to default values."
+    },
+    "resetButton": {
+        "message": "Reset"
+    },
+    "confirmReset": {
+        "message": "Are you sure you want to reset all data? This action cannot be undone!"
+    },
+    "resetSuccess": {
+        "message": "Reset to default settings!"
     }
 }

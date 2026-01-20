@@ -142,5 +142,20 @@
     },
     "openSettings": {
         "message": "打开设置"
+    },
+    "resetToDefault": {
+        "message": "重置为默认"
+    },
+    "resetToDefaultDesc": {
+        "message": "将所有设置、站点和分组重置为默认值。"
+    },
+    "resetButton": {
+        "message": "重置"
+    },
+    "confirmReset": {
+        "message": "确定要重置所有数据吗？此操作不可撤销！"
+    },
+    "resetSuccess": {
+        "message": "已重置为默认设置！"
     }
 }

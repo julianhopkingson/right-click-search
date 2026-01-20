@@ -1,0 +1,121 @@
+{
+    "sites": [
+        {
+            "id": "default-google",
+            "name": "Google",
+            "url": "https://www.google.com/search?q=%s",
+            "show": false,
+            "order": 0
+        },
+        {
+            "id": "default-baidu",
+            "name": "百度",
+            "url": "https://www.baidu.com/s?wd=%s",
+            "show": false,
+            "order": 1
+        },
+        {
+            "id": "default-youtube",
+            "name": "Youtube",
+            "url": "https://www.youtube.com/results?search_query=%s",
+            "show": true,
+            "order": 2
+        },
+        {
+            "id": "default-bilibili",
+            "name": "B站",
+            "url": "https://search.bilibili.com/all?keyword=%s",
+            "show": false,
+            "order": 3
+        },
+        {
+            "id": "default-wikipedia",
+            "name": "Wikipedia",
+            "url": "https://en.wikipedia.org/w/index.php?title=Special:Search&search=%s",
+            "show": true,
+            "order": 4
+        },
+        {
+            "id": "default-douban-book",
+            "name": "豆瓣读书",
+            "url": "https://search.douban.com/book/subject_search?search_text=%s&cat=1001",
+            "show": false,
+            "order": 5
+        },
+        {
+            "id": "default-douban-movie",
+            "name": "豆瓣电影",
+            "url": "https://movie.douban.com/subject_search?search_text=%s&cat=1002",
+            "show": true,
+            "order": 6
+        },
+        {
+            "id": "default-chatgpt",
+            "name": "ChatGPT",
+            "url": "https://chat.openai.com/?q=%s",
+            "show": false,
+            "order": 7
+        },
+        {
+            "id": "default-maosou",
+            "name": "猫搜",
+            "url": "https://www.alipansou.com/search?k=%s",
+            "show": false,
+            "order": 8
+        },
+        {
+            "id": "default-yiso",
+            "name": "易搜",
+            "url": "https://yiso.fun/info?searchKey=%s",
+            "show": false,
+            "order": 9
+        },
+        {
+            "id": "default-zlib",
+            "name": "zlib",
+            "url": "https://z-library.sk/s/%s?order=bestmatch",
+            "show": false,
+            "order": 10
+        }
+    ],
+    "groups": [
+        {
+            "id": "default-video",
+            "name": "Video",
+            "siteIds": [
+                "default-youtube",
+                "default-bilibili",
+                "default-douban-movie"
+            ],
+            "show": true,
+            "order": 0
+        },
+        {
+            "id": "default-book",
+            "name": "Book",
+            "siteIds": [
+                "default-douban-book",
+                "default-zlib"
+            ],
+            "show": true,
+            "order": 1
+        },
+        {
+            "id": "default-cloud",
+            "name": "云盘",
+            "siteIds": [
+                "default-douban-movie",
+                "default-maosou",
+                "default-yiso"
+            ],
+            "show": true,
+            "order": 2
+        }
+    ],
+    "settings": {
+        "language": "en",
+        "openInNewTab": true,
+        "focusNewTab": false,
+        "tabPosition": "NEXT"
+    }
+}

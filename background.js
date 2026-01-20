@@ -3,42 +3,44 @@
  * 处理右键菜单和标签页创建
  */
 
-// 导入storage模块的默认数据（Service Worker环境）
-const DEFAULT_SITES = [
-    { id: 'default-google', name: 'Google', url: 'https://www.google.com/search?q=%s', show: true, order: 0 },
-    { id: 'default-baidu', name: '百度', url: 'https://www.baidu.com/s?wd=%s', show: true, order: 1 },
-    { id: 'default-youtube', name: 'Youtube', url: 'https://www.youtube.com/results?search_query=%s', show: true, order: 2 },
-    { id: 'default-bilibili', name: 'B站', url: 'https://search.bilibili.com/all?keyword=%s', show: true, order: 3 },
-    { id: 'default-wikipedia', name: 'Wikipedia', url: 'https://en.wikipedia.org/w/index.php?title=Special:Search&search=%s', show: true, order: 4 },
-    { id: 'default-douban-book', name: '豆瓣读书', url: 'https://search.douban.com/book/subject_search?search_text=%s&cat=1001', show: false, order: 5 },
-    { id: 'default-douban-movie', name: '豆瓣电影', url: 'https://movie.douban.com/subject_search?search_text=%s&cat=1002', show: false, order: 6 },
-    { id: 'default-chatgpt', name: 'ChatGPT', url: 'https://chat.openai.com/?q=%s', show: true, order: 7 },
-    { id: 'default-maosou', name: '猫搜', url: 'https://www.alipansou.com/search?k=%s', show: true, order: 8 },
-    { id: 'default-yiso', name: '易搜', url: 'https://yiso.fun/info?searchKey=%s', show: true, order: 9 },
-    { id: 'default-zlib', name: 'zlib', url: 'https://z-library.sk/s/%s?order=bestmatch', show: true, order: 10 }
-];
+// 默认数据缓存
+let DEFAULT_DATA = null;
 
-const DEFAULT_GROUPS = [
-    { id: 'default-video', name: 'Video', siteIds: ['default-youtube', 'default-bilibili'], show: true, order: 0 },
-    { id: 'default-search', name: '搜索引擎', siteIds: ['default-google', 'default-baidu'], show: true, order: 1 }
-];
+/**
+ * 加载默认数据
+ */
+async function loadDefaultData() {
+    if (DEFAULT_DATA) return DEFAULT_DATA;
 
-const DEFAULT_SETTINGS = {
-    language: 'zh_CN',
-    openInNewTab: true,
-    focusNewTab: false,
-    tabPosition: 'NEXT'
-};
+    try {
+        const response = await fetch(chrome.runtime.getURL('data/defaults.json'));
+        DEFAULT_DATA = await response.json();
+    } catch (error) {
+        console.error('Failed to load defaults.json:', error);
+        DEFAULT_DATA = {
+            sites: [],
+            groups: [],
+            settings: {
+                language: 'en',
+                openInNewTab: true,
+                focusNewTab: false,
+                tabPosition: 'NEXT'
+            }
+        };
+    }
+    return DEFAULT_DATA;
+}
 
 /**
  * 获取存储数据
  */
 async function getStorageData() {
+    const defaults = await loadDefaultData();
     const data = await chrome.storage.sync.get(['sites', 'groups', 'settings']);
     return {
-        sites: data.sites || DEFAULT_SITES,
-        groups: data.groups || DEFAULT_GROUPS,
-        settings: data.settings || DEFAULT_SETTINGS
+        sites: data.sites && data.sites.length > 0 ? data.sites : defaults.sites,
+        groups: data.groups && data.groups.length > 0 ? data.groups : defaults.groups,
+        settings: data.settings ? { ...defaults.settings, ...data.settings } : defaults.settings
     };
 }
 

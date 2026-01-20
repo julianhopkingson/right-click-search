@@ -1,0 +1,146 @@
+{
+    "extensionName": {
+        "message": "Right Click Search"
+    },
+    "extensionDescription": {
+        "message": "Quickly search selected text across multiple websites"
+    },
+    "contextMenuTitle": {
+        "message": "Right Click Search"
+    },
+    "tabSearch": {
+        "message": "Search"
+    },
+    "tabAdvanced": {
+        "message": "Advanced"
+    },
+    "tabImportExport": {
+        "message": "Import & Export"
+    },
+    "sites": {
+        "message": "Sites"
+    },
+    "groups": {
+        "message": "Groups"
+    },
+    "siteName": {
+        "message": "Site Name"
+    },
+    "siteUrl": {
+        "message": "Site URL"
+    },
+    "show": {
+        "message": "Show"
+    },
+    "addSite": {
+        "message": "Add Site"
+    },
+    "editSite": {
+        "message": "Edit Site"
+    },
+    "deleteSite": {
+        "message": "Delete Site"
+    },
+    "groupName": {
+        "message": "Group Name"
+    },
+    "addGroup": {
+        "message": "Add Group"
+    },
+    "editGroup": {
+        "message": "Edit Group"
+    },
+    "deleteGroup": {
+        "message": "Delete Group"
+    },
+    "selectSites": {
+        "message": "Select Sites"
+    },
+    "language": {
+        "message": "Language"
+    },
+    "switchLanguage": {
+        "message": "Switch Language"
+    },
+    "openInNewTab": {
+        "message": "Open links in new tab"
+    },
+    "openInNewTabDesc": {
+        "message": "When this is on, clicking on a search result will open it in a new tab."
+    },
+    "giveNewTabFocus": {
+        "message": "Give new tab focus"
+    },
+    "giveNewTabFocusDesc": {
+        "message": "If turned on, the new tab where the search result is opened will become the active tab immediately."
+    },
+    "newTabPosition": {
+        "message": "New tab's position"
+    },
+    "newTabPositionDesc": {
+        "message": "Select where the new tab will appear in relation to your existing tabs."
+    },
+    "positionLast": {
+        "message": "LAST"
+    },
+    "positionFirst": {
+        "message": "FIRST"
+    },
+    "positionNext": {
+        "message": "NEXT"
+    },
+    "positionPrevious": {
+        "message": "PREVIOUS"
+    },
+    "export": {
+        "message": "Export Settings"
+    },
+    "exportDesc": {
+        "message": "Download your current settings as a JSON file."
+    },
+    "exportButton": {
+        "message": "Export to JSON"
+    },
+    "import": {
+        "message": "Import Settings"
+    },
+    "importDesc": {
+        "message": "Import settings from a previously exported JSON file."
+    },
+    "importButton": {
+        "message": "Import from JSON"
+    },
+    "importWarning": {
+        "message": "Warning: Importing will overwrite your current settings."
+    },
+    "save": {
+        "message": "Save"
+    },
+    "cancel": {
+        "message": "Cancel"
+    },
+    "confirm": {
+        "message": "Confirm"
+    },
+    "delete": {
+        "message": "Delete"
+    },
+    "confirmDelete": {
+        "message": "Are you sure you want to delete?"
+    },
+    "urlPlaceholder": {
+        "message": "Enter search URL containing %s"
+    },
+    "urlError": {
+        "message": "URL must contain %s as a search term placeholder"
+    },
+    "importSuccess": {
+        "message": "Import successful!"
+    },
+    "importError": {
+        "message": "Import failed: Invalid file format"
+    },
+    "openSettings": {
+        "message": "Open Settings"
+    }
+}

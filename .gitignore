@@ -1,0 +1,24 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Build outputs
+*.crx
+*.pem
+*.zip
+
+# Node (if using build tools later)
+node_modules/
+
+# Local documentation
+doc_local/
+
+# Logs
+*.log

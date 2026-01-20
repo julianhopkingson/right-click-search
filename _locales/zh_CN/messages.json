@@ -1,0 +1,146 @@
+{
+    "extensionName": {
+        "message": "右键搜索"
+    },
+    "extensionDescription": {
+        "message": "选中文字后快速在多个网站搜索"
+    },
+    "contextMenuTitle": {
+        "message": "右键搜索"
+    },
+    "tabSearch": {
+        "message": "搜索"
+    },
+    "tabAdvanced": {
+        "message": "高级"
+    },
+    "tabImportExport": {
+        "message": "导入导出"
+    },
+    "sites": {
+        "message": "站点"
+    },
+    "groups": {
+        "message": "分组"
+    },
+    "siteName": {
+        "message": "站点名称"
+    },
+    "siteUrl": {
+        "message": "搜索URL"
+    },
+    "show": {
+        "message": "显示"
+    },
+    "addSite": {
+        "message": "添加站点"
+    },
+    "editSite": {
+        "message": "编辑站点"
+    },
+    "deleteSite": {
+        "message": "删除站点"
+    },
+    "groupName": {
+        "message": "分组名称"
+    },
+    "addGroup": {
+        "message": "添加分组"
+    },
+    "editGroup": {
+        "message": "编辑分组"
+    },
+    "deleteGroup": {
+        "message": "删除分组"
+    },
+    "selectSites": {
+        "message": "选择站点"
+    },
+    "language": {
+        "message": "语言"
+    },
+    "switchLanguage": {
+        "message": "切换语言"
+    },
+    "openInNewTab": {
+        "message": "在新标签页中打开链接"
+    },
+    "openInNewTabDesc": {
+        "message": "开启后，搜索结果将在新标签页中打开。"
+    },
+    "giveNewTabFocus": {
+        "message": "聚焦新标签页"
+    },
+    "giveNewTabFocusDesc": {
+        "message": "开启后，新打开的标签页将自动成为当前活动标签页。"
+    },
+    "newTabPosition": {
+        "message": "新标签页位置"
+    },
+    "newTabPositionDesc": {
+        "message": "选择新标签页相对于现有标签页的出现位置。"
+    },
+    "positionLast": {
+        "message": "最后"
+    },
+    "positionFirst": {
+        "message": "最前"
+    },
+    "positionNext": {
+        "message": "右侧"
+    },
+    "positionPrevious": {
+        "message": "左侧"
+    },
+    "export": {
+        "message": "导出设置"
+    },
+    "exportDesc": {
+        "message": "将当前设置下载为JSON文件。"
+    },
+    "exportButton": {
+        "message": "导出为JSON"
+    },
+    "import": {
+        "message": "导入设置"
+    },
+    "importDesc": {
+        "message": "从之前导出的JSON文件导入设置。"
+    },
+    "importButton": {
+        "message": "从JSON导入"
+    },
+    "importWarning": {
+        "message": "警告：导入将覆盖您当前的所有设置。"
+    },
+    "save": {
+        "message": "保存"
+    },
+    "cancel": {
+        "message": "取消"
+    },
+    "confirm": {
+        "message": "确认"
+    },
+    "delete": {
+        "message": "删除"
+    },
+    "confirmDelete": {
+        "message": "确认删除？"
+    },
+    "urlPlaceholder": {
+        "message": "输入包含 %s 的搜索URL"
+    },
+    "urlError": {
+        "message": "URL必须包含 %s 作为搜索词占位符"
+    },
+    "importSuccess": {
+        "message": "导入成功！"
+    },
+    "importError": {
+        "message": "导入失败：文件格式错误"
+    },
+    "openSettings": {
+        "message": "打开设置"
+    }
+}

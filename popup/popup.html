@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="extensionName">右键搜索</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="popup-container">
+        <div class="header">
+            <div class="logo">🔍</div>
+            <h1 data-i18n="extensionName">右键搜索</h1>
+        </div>
+
+        <p class="description" data-i18n="extensionDescription">选中文字后快速在多个网站搜索</p>
+
+        <button class="btn-settings" id="open-settings">
+            <span class="icon">⚙️</span>
+            <span data-i18n="openSettings">打开设置</span>
+        </button>
+
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-value" id="sites-count">0</span>
+                <span class="stat-label" data-i18n="sites">站点</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="groups-count">0</span>
+                <span class="stat-label" data-i18n="groups">分组</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../lib/storage.js"></script>
+    <script src="../lib/i18n.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="extensionName">右键搜索</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header class="header">
+      <h1 data-i18n="extensionName">右键搜索</h1>
+    </header>
+
+    <!-- Tab 导航 -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="search" data-i18n="tabSearch">搜索</button>
+      <button class="tab-btn" data-tab="advanced" data-i18n="tabAdvanced">高级</button>
+      <button class="tab-btn" data-tab="import-export" data-i18n="tabImportExport">导入导出</button>
+    </nav>
+
+    <!-- Tab 内容 -->
+    <main class="tab-content">
+      <!-- Search Tab -->
+      <section id="tab-search" class="tab-pane active">
+        <!-- Sites 区域 -->
+        <div class="card">
+          <div class="card-header">
+            <h2 data-i18n="sites">站点</h2>
+            <button class="btn btn-primary" id="add-site-btn">
+              <span class="icon">+</span>
+              <span data-i18n="addSite">添加站点</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="sites-table">
+              <thead>
+                <tr>
+                  <th class="drag-handle-col"></th>
+                  <th data-i18n="siteName">站点名称</th>
+                  <th data-i18n="siteUrl">搜索URL</th>
+                  <th data-i18n="show">显示</th>
+                  <th class="actions-col"></th>
+                </tr>
+              </thead>
+              <tbody id="sites-list">
+                <!-- 动态生成 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Groups 区域 -->
+        <div class="card">
+          <div class="card-header">
+            <h2 data-i18n="groups">分组</h2>
+            <button class="btn btn-primary" id="add-group-btn">
+              <span class="icon">+</span>
+              <span data-i18n="addGroup">添加分组</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="data-table" id="groups-table">
+              <thead>
+                <tr>
+                  <th class="drag-handle-col"></th>
+                  <th data-i18n="groupName">分组名称</th>
+                  <th data-i18n="sites">站点</th>
+                  <th data-i18n="show">显示</th>
+                  <th class="actions-col"></th>
+                </tr>
+              </thead>
+              <tbody id="groups-list">
+                <!-- 动态生成 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advanced Tab -->
+      <section id="tab-advanced" class="tab-pane">
+        <div class="card">
+          <!-- 语言切换 -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3 data-i18n="language">语言</h3>
+            </div>
+            <button class="btn btn-secondary" id="language-toggle">
+              <span id="language-text">中文 ↔ EN</span>
+            </button>
+          </div>
+
+          <hr class="divider">
+
+          <!-- Tabs 设置 -->
+          <h3 class="section-title">Tabs</h3>
+
+          <!-- 新标签页打开 -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <label data-i18n="openInNewTab">在新标签页中打开链接</label>
+              <p class="setting-desc" data-i18n="openInNewTabDesc">开启后，搜索结果将在新标签页中打开。</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="open-new-tab" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- 聚焦新标签页 -->
+          <div class="setting-item">
+            <div class="setting-info">
+              <label data-i18n="giveNewTabFocus">聚焦新标签页</label>
+              <p class="setting-desc" data-i18n="giveNewTabFocusDesc">开启后，新打开的标签页将自动成为当前活动标签页。</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="focus-new-tab">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- 标签页位置 -->
+          <div class="setting-item setting-item-vertical">
+            <div class="setting-info">
+              <label data-i18n="newTabPosition">新标签页位置</label>
+              <p class="setting-desc" data-i18n="newTabPositionDesc">选择新标签页相对于现有标签页的出现位置。</p>
+            </div>
+            <div class="position-buttons" id="tab-position">
+              <button class="position-btn" data-position="LAST" data-i18n="positionLast">最后</button>
+              <button class="position-btn" data-position="FIRST" data-i18n="positionFirst">最前</button>
+              <button class="position-btn active" data-position="NEXT" data-i18n="positionNext">右侧</button>
+              <button class="position-btn" data-position="PREVIOUS" data-i18n="positionPrevious">左侧</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Import & Export Tab -->
+      <section id="tab-import-export" class="tab-pane">
+        <div class="card">
+          <!-- 导出 -->
+          <div class="ie-section">
+            <h3 data-i18n="export">导出设置</h3>
+            <p class="setting-desc" data-i18n="exportDesc">将当前设置下载为JSON文件。</p>
+            <button class="btn btn-primary btn-large" id="export-btn">
+              <span class="icon">📥</span>
+              <span data-i18n="exportButton">导出为JSON</span>
+            </button>
+          </div>
+
+          <hr class="divider">
+
+          <!-- 导入 -->
+          <div class="ie-section">
+            <h3 data-i18n="import">导入设置</h3>
+            <p class="setting-desc" data-i18n="importDesc">从之前导出的JSON文件导入设置。</p>
+            <button class="btn btn-secondary btn-large" id="import-btn">
+              <span class="icon">📤</span>
+              <span data-i18n="importButton">从JSON导入</span>
+            </button>
+            <input type="file" id="import-file" accept=".json" hidden>
+            <p class="warning" data-i18n="importWarning">⚠️ 警告：导入将覆盖您当前的所有设置。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 模态框 - 添加/编辑站点 -->
+  <div class="modal" id="site-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="site-modal-title" data-i18n="addSite">添加站点</h3>
+        <button class="modal-close" id="site-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label data-i18n="siteName">站点名称</label>
+          <input type="text" id="site-name-input" class="form-input" placeholder="Youtube">
+        </div>
+        <div class="form-group">
+          <label data-i18n="siteUrl">搜索URL</label>
+          <input type="text" id="site-url-input" class="form-input" data-i18n-placeholder="urlPlaceholder" placeholder="输入包含 %s 的搜索URL">
+          <p class="form-hint" data-i18n="urlError">URL必须包含 %s 作为搜索词占位符</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="site-modal-cancel" data-i18n="cancel">取消</button>
+        <button class="btn btn-primary" id="site-modal-save" data-i18n="save">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模态框 - 添加/编辑分组 -->
+  <div class="modal" id="group-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="group-modal-title" data-i18n="addGroup">添加分组</h3>
+        <button class="modal-close" id="group-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label data-i18n="groupName">分组名称</label>
+          <input type="text" id="group-name-input" class="form-input" placeholder="Video">
+        </div>
+        <div class="form-group">
+          <label data-i18n="selectSites">选择站点</label>
+          <div class="sites-selector" id="sites-selector">
+            <!-- 动态生成站点checkbox -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="group-modal-cancel" data-i18n="cancel">取消</button>
+        <button class="btn btn-primary" id="group-modal-save" data-i18n="save">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 消息提示 -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../lib/storage.js"></script>
+  <script src="../lib/i18n.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
